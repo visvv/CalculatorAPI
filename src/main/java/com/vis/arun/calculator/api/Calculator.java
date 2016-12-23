@@ -6,8 +6,9 @@ package com.vis.arun.calculator.api;
 public interface Calculator {
     public void reinit();
     public String reinit(String value);
-    public String execute(Operator operator, String value);
-    public String execute(Operator operator);
-    public String execute(String value);
     public String getAc();
+
+    public String addOperand(String operand);
+    public void setOperator(Operator operator);
+    public String execute();
 }

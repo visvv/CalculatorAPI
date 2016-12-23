@@ -5,11 +5,14 @@ package com.vis.arun.calculator.api;
  */
 public class ArithmeticCalculator implements Calculator {
     private String ac;
+    private String opAc;
     private OperationHandler operationHandler;
     private Operator operator;
 
     public ArithmeticCalculator() {
         operationHandler = new OperationHandlerImpl();
+        this.ac = "0";
+        this.opAc = "";
     }
 
     @Override
@@ -24,25 +27,33 @@ public class ArithmeticCalculator implements Calculator {
     }
 
     @Override
-    public String execute(Operator operator, String value) {
-        ac = operationHandler.perform(ac, value, operator);
-        return ac;
-    }
-
-    @Override
     public String getAc() {
         return this.ac;
     }
 
     @Override
-    public String execute(Operator operator) {
-        this.operator = operator;
-        return  ac;
+    public String addOperand(String operand) {
+        opAc = opAc.concat(operand);
+        return opAc;
     }
 
     @Override
-    public String execute(String value) {
-        if(this.operator == null) return this.ac;
-        return this.execute(this.operator, value);
+    public void setOperator(Operator operator) {
+        this.operator = operator;
+        this.ac = this.opAc;
+        this.opAc ="";
+    }
+
+    @Override
+    public String execute() {
+        if(this.operator == null){
+            this.ac = this.opAc;
+            this.opAc = null;
+            return this.ac;
+        }
+
+        this.ac = operationHandler.perform(ac, opAc, operator);
+        this.opAc = "";
+        return this.ac;
     }
 }
