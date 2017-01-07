@@ -2,7 +2,11 @@ package com.vis.arun.calculator.api;
 
 import javafx.util.converter.BigDecimalStringConverter;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BinaryOperator;
@@ -11,50 +15,37 @@ import java.util.function.BinaryOperator;
  * Created by vasudvis on 12/24/2016.
  */
 public class OperationHandlerImpl implements OperationHandler {
+    private ScriptEngine engine;
 
-    private Map<Operator, BinaryOperator<String>> operatorMap = new HashMap<>();
-
-    public OperationHandlerImpl(){
-        registerOperations();
+    public OperationHandlerImpl() {
+        initScriptEngine();
     }
 
-    private void registerOperations() {
-          operatorMap.put(Operator.ADDITION, this::addition);
-          operatorMap.put(Operator.SUBSTRACTION, this::subtraction);
-          operatorMap.put(Operator.MULTIPLICATION, this::multiplication);
-          operatorMap.put(Operator.DIVISION, this::division);
+    private void initScriptEngine() {
+        ScriptEngineManager mgr = new ScriptEngineManager();
+        engine = mgr.getEngineByName("JavaScript");
     }
 
     public String perform(String op1, String op2, Operator operator) {
-        BinaryOperator<String> operation = operatorMap.get(operator);
-        if(operation == null){
-             throw new IllegalArgumentException("Non-Supported operation");
+        int scale = Math.max(getDecimalCount(op1), getDecimalCount(op2));
+        try {
+            String result =  engine.eval(op1 + operator.getSign() + op2).toString();
+            return format(result, scale);
+        } catch (ScriptException e) {
+            e.printStackTrace();
         }
-        return operation.apply(op1, op2);
+        return null;
+    }
+
+    private String format(String result, int scale){
+        BigDecimal bd = new BigDecimal(result);
+        bd = bd.setScale(scale, RoundingMode.HALF_UP);
+        return bd.toString();
+    }
+
+    private int getDecimalCount(String number){
+        return number.length() - number.lastIndexOf('.');
     }
 
 
-    public String addition(String op1, String op2){
-        BigDecimal int1 = new BigDecimal(op1);
-        BigDecimal int2 = new BigDecimal(op2);
-        return String.valueOf(int1.add(int2));
-    }
-
-    public String subtraction(String op1, String op2){
-        BigDecimal int1 = new BigDecimal(op1);
-        BigDecimal int2 = new BigDecimal(op2);
-        return String.valueOf(int1.subtract(int2));
-    }
-
-    public String multiplication(String op1, String op2){
-        BigDecimal int1 = new BigDecimal(op1);
-        BigDecimal int2 = new BigDecimal(op2);
-        return String.valueOf(int1.multiply(int2));
-    }
-
-    public String division(String op1, String op2){
-        BigDecimal int1 = new BigDecimal(op1);
-        BigDecimal int2 = new BigDecimal(op2);
-        return String.valueOf(int1.divide(int2));
-    }
 }

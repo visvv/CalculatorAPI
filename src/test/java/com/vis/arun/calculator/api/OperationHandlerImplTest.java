@@ -3,6 +3,9 @@ package com.vis.arun.calculator.api;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import static org.junit.Assert.*;
 
 /**
@@ -27,6 +30,18 @@ public class OperationHandlerImplTest {
     @Test
     public void additionTest4() throws Exception {
         Assert.assertEquals(this.operationHandler.perform("0.2","2.2", Operator.ADDITION), "2.4");
+    }
+
+    @Test
+    public void additionTest5() throws Exception {
+        String number = "234.45";
+        System.out.print(number.length() - number.lastIndexOf('.'));
+       // Assert.assertEquals(Math., "2.4");
+    }
+
+
+    public String addition(String op1, String op2, Operator op){
+        
     }
 
 }

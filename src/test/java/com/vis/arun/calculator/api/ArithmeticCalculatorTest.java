@@ -20,6 +20,8 @@ public class ArithmeticCalculatorTest {
         org.junit.Assert.assertEquals(calculator.getAc(), "7");
     }
 
+    // 2 + 3 + 4 + 5
+
     @Test
     public void testAddition2(){
         calculator.addOperand("2");
@@ -27,8 +29,7 @@ public class ArithmeticCalculatorTest {
         calculator.setOperator(Operator.ADDITION);
         calculator.addOperand("5");
         calculator.addOperand("5");
-        calculator.execute();
-        org.junit.Assert.assertEquals(calculator.getAc(), "77");
+        org.junit.Assert.assertEquals(calculator.execute(), "77");
     }
 
 }
