@@ -29,4 +29,18 @@ public class OperationHandlerImplTest {
         Assert.assertEquals(this.operationHandler.perform("0.2","2.2", Operator.ADDITION), "2.4");
     }
 
+    @Test
+    public void additionTest5() throws Exception {
+        Assert.assertEquals(this.operationHandler.perform("0.211","2.2", Operator.ADDITION), "2.411");
+    }
+
+    public void subtractionTest1() throws Exception {
+        Assert.assertEquals("-2", this.operationHandler.perform("0.2","2.2", Operator.SUBSTRACTION));
+    }
+
+    @Test
+    public void subtractionTest2() throws Exception {
+        Assert.assertEquals("0.999", this.operationHandler.perform("1",".001", Operator.SUBSTRACTION));
+    }
+
 }
