@@ -8,3 +8,8 @@
 **/staging/
 **/dist/
 **/node_modules/
+*.class
+.gradle
+bin/
+gen/
+build/
