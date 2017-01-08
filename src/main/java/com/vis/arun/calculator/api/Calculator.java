@@ -1,14 +1,15 @@
 package com.vis.arun.calculator.api;
 
+import java.math.BigDecimal;
+
 /**
  * Created by vasudvis on 12/24/2016.
  */
 public interface Calculator {
     public void reinit();
-    public String reinit(String value);
-    public String getAc();
-
-    public String addOperand(String operand);
+    public BigDecimal reinit(BigDecimal value);
+    public BigDecimal getAc();
+    public void addOperand(BigDecimal operand);
     public void setOperator(Operator operator);
-    public String execute();
+    public BigDecimal execute();
 }

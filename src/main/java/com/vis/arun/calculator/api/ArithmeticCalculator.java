@@ -1,59 +1,53 @@
 package com.vis.arun.calculator.api;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vasudvis on 12/24/2016.
  */
 public class ArithmeticCalculator implements Calculator {
-    private String ac;
-    private String opAc;
-    private OperationHandler operationHandler;
-    private Operator operator;
 
-    public ArithmeticCalculator() {
-        operationHandler = new OperationHandlerImpl();
-        this.ac = "0";
-        this.opAc = "";
+    private BigDecimal acc;
+    private List<BigDecimal> operadList;
+    private List<Operator> operatorList;
+
+    public ArithmeticCalculator(){
+        reinit();
     }
 
     @Override
     public void reinit() {
-          ac = "0";
+        acc = new BigDecimal("0");
+        this.operadList = new ArrayList<BigDecimal>();
+        this.operatorList = new ArrayList<Operator>();
     }
 
     @Override
-    public String reinit(String value) {
-        ac = value;
-        return ac;
+    public BigDecimal reinit(BigDecimal value) {
+        this.reinit();
+        this.addOperand(value);
+        return value;
     }
 
     @Override
-    public String getAc() {
-        return this.ac;
+    public BigDecimal getAc() {
+        return this.acc;
     }
 
     @Override
-    public String addOperand(String operand) {
-        opAc = opAc.concat(operand);
-        return opAc;
+    public void addOperand(BigDecimal operand) {
+        this.operadList.add(operand);
     }
 
     @Override
     public void setOperator(Operator operator) {
-        this.operator = operator;
-        this.ac = this.opAc;
-        this.opAc ="";
+        this.operatorList.add(operator);
     }
 
     @Override
-    public String execute() {
-        if(this.operator == null){
-            this.ac = this.opAc;
-            this.opAc = null;
-            return this.ac;
-        }
-
-        this.ac = operationHandler.perform(ac, opAc, operator);
-        this.opAc = "";
-        return this.ac;
+    public BigDecimal execute() {
+        return null;
     }
 }

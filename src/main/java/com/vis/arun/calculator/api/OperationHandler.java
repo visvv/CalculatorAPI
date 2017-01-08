@@ -1,8 +1,12 @@
 package com.vis.arun.calculator.api;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.List;
+
 /**
  * Created by vasudvis on 12/24/2016.
  */
 public interface OperationHandler {
-    public String perform(String op1, String op2, Operator operator);
+    public BigDecimal perform(List<BigDecimal> operandList, List<Operator> operatorList);
 }
